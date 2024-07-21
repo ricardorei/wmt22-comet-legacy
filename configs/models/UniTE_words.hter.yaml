@@ -1,0 +1,55 @@
+unite_metric_multi_task:
+  class_path: comet.models.UniTEMetricMT
+  init_args:
+    nr_frozen_epochs: 0.3
+    keep_embeddings_frozen: True
+    optimizer: AdamW
+    encoder_learning_rate: 1.0e-06
+    learning_rate: 1.0e-05
+    layerwise_decay: 0.95
+    encoder_model: XLM-RoBERTa
+    pretrained_model: microsoft/infoxlm-large
+    pool: cls
+    layer: word_mix_sent_mix
+    loss: mse
+    dropout: 0.1
+    batch_size: 4
+    train_data:
+      - data/word-level-subtask/hter/train_wl_da_tokenized.csv 
+    sampling_gamma: 1.0
+    validation_data: 
+      - data/word-level-subtask/hter/dev/en-cs-dev.csv
+      - data/word-level-subtask/hter/dev/en-de-dev.csv
+      - data/word-level-subtask/hter/dev/en-ja-dev.csv
+      - data/word-level-subtask/hter/dev/en-zh-dev.csv
+      - data/word-level-subtask/hter/dev/et-en-dev.csv
+      - data/word-level-subtask/hter/dev/et-en-dev.csv
+      - data/word-level-subtask/hter/dev/ne-en-dev.csv
+      - data/word-level-subtask/hter/dev/ro-en-dev.csv
+      - data/word-level-subtask/hter/dev/ru-en-dev.csv
+      - data/word-level-subtask/hter/dev/si-en-dev.csv
+      - data/word-level-subtask/hter/dev/km-en-dev.csv
+      - data/word-level-subtask/hter/dev/ps-en-dev.csv
+
+    hidden_sizes:
+      - 2048
+      - 1024
+    activations: Tanh
+    rnn_hidden_size: 1024
+    rnn_hidden_layers: 2
+    word_weights:
+      - 0.1
+      - 0.9 
+    input_segments:
+      - mt
+      - src
+    unite_training: False
+    qe_training: True
+    word_level_training: True
+    use_rnn: True
+    
+
+    
+trainer: ../trainer.yaml
+early_stopping: ../early_stopping.yaml
+model_checkpoint: ../model_checkpoint.yaml

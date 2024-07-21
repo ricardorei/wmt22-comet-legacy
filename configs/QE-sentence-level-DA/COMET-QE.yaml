@@ -1,0 +1,39 @@
+referenceless_regression_metric:
+  class_path: comet.models.ReferencelessRegression
+  init_args:
+    nr_frozen_epochs: 0.3
+    keep_embeddings_frozen: True
+    optimizer: AdamW
+    encoder_learning_rate: 5.0e-06
+    learning_rate: 1.5e-05
+    layerwise_decay: 0.95
+    encoder_model: XLM-RoBERTa
+    pretrained_model: xlm-roberta-large
+    pool: avg
+    layer: mix
+    loss: mse
+    dropout: 0.1
+    batch_size: 4
+    train_data: 
+      - data/QE-Sentence-level-DA/2022-qe-train.csv 
+    validation_data: 
+      - data/QE-Sentence-level-DA/2022-qe-dev.en-cs.csv
+      - data/QE-Sentence-level-DA/2022-qe-dev.en-de.csv
+      - data/QE-Sentence-level-DA/2022-qe-dev.en-ja.csv
+      - data/QE-Sentence-level-DA/2022-qe-dev.en-mr.csv
+      - data/QE-Sentence-level-DA/2022-qe-dev.en-zh.csv
+      - data/QE-Sentence-level-DA/2022-qe-dev.et-en.csv
+      - data/QE-Sentence-level-DA/2022-qe-dev.km-en.csv
+      - data/QE-Sentence-level-DA/2022-qe-dev.ne-en.csv
+      - data/QE-Sentence-level-DA/2022-qe-dev.ps-en.csv
+      - data/QE-Sentence-level-DA/2022-qe-dev.ro-en.csv
+      - data/QE-Sentence-level-DA/2022-qe-dev.ru-en.csv
+      - data/QE-Sentence-level-DA/2022-qe-dev.si-en.csv
+    hidden_sizes:
+      - 2048
+      - 1024
+    activations: Tanh
+    
+trainer: ../trainer.yaml
+early_stopping: ../early_stopping.yaml
+model_checkpoint: ../model_checkpoint.yaml

@@ -1,0 +1,45 @@
+unite_metric_multi_task:
+  class_path: comet.models.UniTEMetricMT
+  init_args:
+    nr_frozen_epochs: 0.3
+    keep_embeddings_frozen: True
+    optimizer: AdamW
+    encoder_learning_rate: 1.0e-06
+    learning_rate: 1.0e-05
+    layerwise_decay: 0.95
+    encoder_model: XLM-RoBERTa
+    pretrained_model: microsoft/infoxlm-large
+    pool: cls
+    loss: mse
+    dropout: 0.1
+    batch_size: 4
+    train_data: 
+      - data/word-level-subtask/hter/train-dev.lp-prefix.csv
+    sampling_gamma: 1.0
+    validation_data: 
+      - data/word-level-subtask/hter/test/en-mr-test.lp-prefix.csv
+
+
+    hidden_sizes:
+      - 3072
+      - 1024
+    activations: Tanh
+    rnn_hidden_size: 1024
+    rnn_hidden_layers: 2
+    word_weights:
+      - 0.3
+      - 0.7
+    input_segments:
+      - mt
+      - src
+    unite_training: false
+    use_rnn: false
+    qe_training: True
+    word_layer: 24
+    word_level_training: true
+    
+
+    
+trainer: ../trainer.yaml
+early_stopping: ../early_stopping.yaml
+model_checkpoint: ../model_checkpoint.yaml
